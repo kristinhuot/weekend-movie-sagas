@@ -9,21 +9,21 @@ function* setCurrentMovieID(){
 
 }
 
-function* fetchOneMovie(){
-  try{
-    const response = yield axios({
-      method: 'GET',
-      url: '/api/movies'
-    })
-    yield put({
-      type: '****',
-      payload: response.data
-    })
-  }
-    catch(error){
-      console.log('Error fetching one movie', error);
-    }  
-}
+// function* fetchOneMovie(){
+//   try{
+//     const response = yield axios({
+//       method: 'GET',
+//       url: '/api/movies'
+//     })
+//     yield put({
+//       type: '****',
+//       payload: response.data
+//     })
+//   }
+//     catch(error){
+//       console.log('Error fetching one movie', error);
+//     }  
+// }
 
 function* fetchAllMovies() {
   try {
@@ -54,6 +54,21 @@ function* fetchCurrentGenre (action){
   }
 }
 
+function* fetchCurrentMovieDetail(action){
+  try {
+    const movieID = action.payload
+    // Get the genre:
+    const detailsResponse = yield axios.get(`/api/movies/${movieID}`);
+    // Set the value of the currentGenres reducer:
+    yield put({
+      type: 'GET_MOVIE_DETAILS',
+      payload: detailsResponse.data
+    });
+  } catch (error) {
+    console.log('fetchCurrentMovieDetail error:', error);
+  }
+}
+
 // Used to store movies returned from the server
 const movies = (state = [], action) => {
   switch (action.type) {
@@ -74,9 +89,9 @@ const currentMovieID = (state= 0, action) => {
   }
 }
 // reducer to store the move details of the movie that is clicked
-const currentMovieDetails = (state={}, action) => {
+const currentMovieDetails = (state=[], action) => {
   switch (action.type) {
-    case 'SET_MOVIE_DETAILS':
+    case 'GET_MOVIE_DETAILS':
       return action.payload;
     default: 
       return state; 
@@ -109,9 +124,10 @@ const sagaMiddleware = createSagaMiddleware();
 // Create the rootSaga generator function
 function* rootSaga() {
   yield takeEvery('FETCH_MOVIES', fetchAllMovies);
-  yield takeEvery('FETCH_ONE_MOVIE', fetchOneMovie); 
+  // yield takeEvery('FETCH_ONE_MOVIE', fetchOneMovie); 
   yield takeEvery('SET_MOVIE_ID', setCurrentMovieID);
   yield takeEvery('SET_MOVIE_GENRE', fetchCurrentGenre)
+  yield takeEvery('SET_MOVIE_DETAILS', fetchCurrentMovieDetail)
 }
 
 // Create one store that all components can use

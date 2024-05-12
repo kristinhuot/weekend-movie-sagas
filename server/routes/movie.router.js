@@ -18,6 +18,24 @@ router.get('/', (req, res) => {
 
 });
 
+router.get('/:id', (req, res) => {
+  const movieID = req.params.id; 
+  const sqlText = `
+    SELECT * FROM "movies"
+      WHERE "movies"."id" = $1 
+  `
+  pool.query(sqlText, [movieID])
+    .then((result) => {
+      res.send(result.rows)
+    })
+    .catch((error) => {
+      console.log('error in GET route for movie detail', error);
+      res.sendStatus()
+    })
+
+})
+
+
 
 //STRETCH 
 router.post('/', (req, res) => {
