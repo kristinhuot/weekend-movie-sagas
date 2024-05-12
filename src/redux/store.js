@@ -36,6 +36,7 @@ const movies = (state = [], action) => {
   }
 }
 
+//STRETCH 
 // Used to store the movie genres
 const genres = (state = [], action) => {
   switch (action.type) {
