@@ -1,6 +1,6 @@
 Home/List Page
 
-[ ] When a movie poster (<img> element) is clicked, a user should be brought to the details page.
+[x] When a movie poster (<img> element) is clicked, a user should be brought to the details page.
 
 [ ] Each of the movie items' posters (<img> elements) on this page must have a data-testid="toDetails" attribute.
 
@@ -9,8 +9,8 @@ Details Page
 
 [ ] The details page must have a data-testid="movieDetails" attribute.
 
-[ ] The details page must have a "back to movie list" button, which should bring the user back to the Home/List Page.
+[x] The details page must have a "back to movie list" button, which should bring the user back to the Home/List Page.
 
-[ ] The "back to movie list" button must have a data-testid="toList" attribute.
+[x] The "back to movie list" button must have a data-testid="toList" attribute.
 
 Hint: You can make a GET request for a specific movie! Remember req.params and :id?

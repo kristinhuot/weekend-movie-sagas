@@ -1,9 +1,19 @@
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 function DetailsPage(){
 
     const history = useHistory(); 
+    const dispatch = useDispatch(); 
+
+    const fetchOneMovie = () => {
+        
+    }
+
+    useEffect(() => {
+        fetchOneMovie(); 
+    }, [])
 
     function returnToHome(){
         history.push('/')
@@ -14,7 +24,11 @@ return(
     <div>
         <h1>Movie Details</h1>
         <button data-testid="toList" onClick={returnToHome} >Return to Home</button>
+        <div>
+           
 
+
+        </div>
 
 
     </div>

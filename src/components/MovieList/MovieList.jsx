@@ -13,8 +13,13 @@ function MovieList() {
     dispatch({ type: 'FETCH_MOVIES' });
   }, []);
 
-  function changeToDetailsPage(){
+  function changeToDetailsPage(movie){
+    dispatch({
+      type: 'SET_MOVIE_ID',
+      payload: movie.id
+    })
     history.push('/details')
+    
   }
 
   return (
@@ -25,7 +30,7 @@ function MovieList() {
           return (
             <div data-testid='movieItem' key={movie.id}>
               <h3>{movie.title}</h3>
-              <img onClick={changeToDetailsPage} src={movie.poster} alt={movie.title}/>
+              <img onClick={() => changeToDetailsPage(movie)} src={movie.poster} alt={movie.title}/>
             </div>
           );
         })}

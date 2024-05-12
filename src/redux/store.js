@@ -1,12 +1,28 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
-import { takeEvery, put } from 'redux-saga/effects';
+import { takeEvery, put, take } from 'redux-saga/effects';
 import axios from 'axios';
 
-// Create the rootSaga generator function
-function* rootSaga() {
-  yield takeEvery('FETCH_MOVIES', fetchAllMovies);
+
+function* setCurrentMovieID(){
+
+}
+
+function* fetchOneMovie(){
+  try{
+    const response = yield axios({
+      method: 'GET',
+      url: '/api/movies'
+    })
+    yield put({
+      type: '****',
+      payload: response.data
+    })
+  }
+    catch(error){
+      console.log('Error fetching one movie', error);
+    }  
 }
 
 function* fetchAllMovies() {
@@ -23,9 +39,6 @@ function* fetchAllMovies() {
   }
 }
 
-// Create sagaMiddleware
-const sagaMiddleware = createSagaMiddleware();
-
 // Used to store movies returned from the server
 const movies = (state = [], action) => {
   switch (action.type) {
@@ -33,6 +46,16 @@ const movies = (state = [], action) => {
       return action.payload;
     default:
       return state;
+  }
+}
+
+const currentMovieID = (state= 0, action) => {
+  switch (action.type) {
+    case 'SET_MOVIE_ID': 
+    console.log('currentMovieID is', action.payload);
+      return action.payload;
+    default: 
+      return state; 
   }
 }
 
@@ -47,11 +70,22 @@ const genres = (state = [], action) => {
   }
 }
 
+// Create sagaMiddleware
+const sagaMiddleware = createSagaMiddleware();
+
+// Create the rootSaga generator function
+function* rootSaga() {
+  yield takeEvery('FETCH_MOVIES', fetchAllMovies);
+  yield takeEvery('FETCH_ONE_MOVIE', fetchOneMovie); 
+  yield takeEvery('SET_MOVIE_ID', setCurrentMovieID)
+}
+
 // Create one store that all components can use
 const storeInstance = createStore(
   combineReducers({
     movies,
     genres,
+    currentMovieID,
   }),
   // Add sagaMiddleware to our store
   applyMiddleware(sagaMiddleware, logger),
