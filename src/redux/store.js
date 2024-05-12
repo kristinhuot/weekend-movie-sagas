@@ -9,22 +9,6 @@ function* setCurrentMovieID(){
 
 }
 
-// function* fetchOneMovie(){
-//   try{
-//     const response = yield axios({
-//       method: 'GET',
-//       url: '/api/movies'
-//     })
-//     yield put({
-//       type: '****',
-//       payload: response.data
-//     })
-//   }
-//     catch(error){
-//       console.log('Error fetching one movie', error);
-//     }  
-// }
-
 function* fetchAllMovies() {
   try {
     // Get the movies:
@@ -124,7 +108,6 @@ const sagaMiddleware = createSagaMiddleware();
 // Create the rootSaga generator function
 function* rootSaga() {
   yield takeEvery('FETCH_MOVIES', fetchAllMovies);
-  // yield takeEvery('FETCH_ONE_MOVIE', fetchOneMovie); 
   yield takeEvery('SET_MOVIE_ID', setCurrentMovieID);
   yield takeEvery('SET_MOVIE_GENRE', fetchCurrentGenre)
   yield takeEvery('SET_MOVIE_DETAILS', fetchCurrentMovieDetail)

@@ -7,15 +7,25 @@ function DetailsPage(){
     const history = useHistory(); 
     const dispatch = useDispatch(); 
     const movieID = useSelector(store=>store.currentMovieID)
+    const movieDetails = useSelector(store=>store.currentMovieDetails)
+    const movieGenre = useSelector(store=>store.currentMovieGenres)
 
-    
+    function renderMovie(){
 
-    const fetchOneMovie = () => {
+        if(movieDetails.length > 0){
+            const movie=movieDetails[0]; 
         
-    }
+        return(
+            <div>
+                <h2>{movie.title}</h2>
+                <img src={movie.poster}/>
+                <p>{movie.description}</p>
+                <p>Genres: {movieGenre.map((genre) => genre.name).join(", ")}</p>
+            </div>)            
+    }}
 
     useEffect(() => {
-        fetchOneMovie(); 
+        renderMovie
     }, [])
 
     function returnToHome(){
@@ -28,9 +38,7 @@ return(
         <h1>Movie Details</h1>
         <button data-testid="toList" onClick={returnToHome} >Return to Home</button>
         <div>
-           
-
-
+           {renderMovie()}
         </div>
 
 
@@ -38,8 +46,6 @@ return(
 
     )
 }
-
-
 
 
 
