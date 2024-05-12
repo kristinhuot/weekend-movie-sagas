@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool')
 
+//router to get all movies
 router.get('/', (req, res) => {
   const query = `
     SELECT * FROM "movies"
@@ -18,6 +19,7 @@ router.get('/', (req, res) => {
 
 });
 
+//router to get movie details for a specific movie 
 router.get('/:id', (req, res) => {
   const movieID = req.params.id; 
   const sqlText = `

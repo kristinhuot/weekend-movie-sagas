@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool')
 
+
+// router to get the genre for a specific movie ID  
 router.get('/:id', (req, res) =>{
   const movieID=req.params.id; 
   const sqlText = `

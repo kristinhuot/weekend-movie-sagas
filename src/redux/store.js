@@ -9,6 +9,7 @@ function* setCurrentMovieID(){
 
 }
 
+//fetches all movies and their image for the home page 
 function* fetchAllMovies() {
   try {
     // Get the movies:
@@ -23,6 +24,7 @@ function* fetchAllMovies() {
   }
 }
 
+//fetch current genres from the server for one specific movie 
 function* fetchCurrentGenre (action){
   try {
     const movieID = action.payload
@@ -38,6 +40,7 @@ function* fetchCurrentGenre (action){
   }
 }
 
+//fetch movie detail from the server for one specific movie
 function* fetchCurrentMovieDetail(action){
   try {
     const movieID = action.payload

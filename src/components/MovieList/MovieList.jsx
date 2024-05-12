@@ -9,6 +9,7 @@ function MovieList() {
   const dispatch = useDispatch();
   const movies = useSelector(store => store.movies);
 
+  //upon load, sends dispatches to grab id, genre, and details for the movie selected
   useEffect(() => {
     dispatch({ type: 'FETCH_MOVIES' });
   }, []);
@@ -38,7 +39,7 @@ function MovieList() {
           return (
             <div data-testid='movieItem' key={movie.id}>
               <h3>{movie.title}</h3>
-              <img onClick={() => changeToDetailsPage(movie)} src={movie.poster} alt={movie.title}/>
+              <img data-testid="toDetails" onClick={() => changeToDetailsPage(movie)} src={movie.poster} alt={movie.title}/>
             </div>
           );
         })}
