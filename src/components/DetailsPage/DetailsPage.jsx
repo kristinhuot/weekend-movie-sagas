@@ -1,11 +1,14 @@
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 function DetailsPage(){
 
     const history = useHistory(); 
     const dispatch = useDispatch(); 
+    const movieID = useSelector(store=>store.currentMovieID)
+
+    
 
     const fetchOneMovie = () => {
         

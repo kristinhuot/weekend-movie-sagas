@@ -39,6 +39,21 @@ function* fetchAllMovies() {
   }
 }
 
+function* fetchCurrentGenre (action){
+  try {
+    const movieID = action.payload
+    // Get the genre:
+    const genreResponse = yield axios.get(`/api/genres/${movieID}`);
+    // Set the value of the currentGenres reducer:
+    yield put({
+      type: 'GET_CURRENT_GENRE',
+      payload: genreResponse.data
+    });
+  } catch (error) {
+    console.log('currentMovieGenres error:', error);
+  }
+}
+
 // Used to store movies returned from the server
 const movies = (state = [], action) => {
   switch (action.type) {
@@ -48,11 +63,29 @@ const movies = (state = [], action) => {
       return state;
   }
 }
-
+//reducer to store the id of the movie that is clicked 
 const currentMovieID = (state= 0, action) => {
   switch (action.type) {
     case 'SET_MOVIE_ID': 
     console.log('currentMovieID is', action.payload);
+      return action.payload;
+    default: 
+      return state; 
+  }
+}
+// reducer to store the move details of the movie that is clicked
+const currentMovieDetails = (state={}, action) => {
+  switch (action.type) {
+    case 'SET_MOVIE_DETAILS':
+      return action.payload;
+    default: 
+      return state; 
+  }
+}
+// reducer to store the genres of the movie that is clicked 
+const currentMovieGenres = (state=[], action) => {
+  switch (action.type){
+    case 'GET_CURRENT_GENRE':
       return action.payload;
     default: 
       return state; 
@@ -77,7 +110,8 @@ const sagaMiddleware = createSagaMiddleware();
 function* rootSaga() {
   yield takeEvery('FETCH_MOVIES', fetchAllMovies);
   yield takeEvery('FETCH_ONE_MOVIE', fetchOneMovie); 
-  yield takeEvery('SET_MOVIE_ID', setCurrentMovieID)
+  yield takeEvery('SET_MOVIE_ID', setCurrentMovieID);
+  yield takeEvery('SET_MOVIE_GENRE', fetchCurrentGenre)
 }
 
 // Create one store that all components can use
@@ -86,6 +120,8 @@ const storeInstance = createStore(
     movies,
     genres,
     currentMovieID,
+    currentMovieDetails,
+    currentMovieGenres
   }),
   // Add sagaMiddleware to our store
   applyMiddleware(sagaMiddleware, logger),
