@@ -1,9 +1,6 @@
-# Project Name
+# Weekend Movie - Sages and Redux
 
-[Project Instructions](./INSTRUCTIONS.md), this line may be removed once you have updated the README.md
 
 ## Description
 
-Your project description goes here. What problem did you solve? How did you solve it?
-
-Additional README details can be found [here](https://github.com/PrimeAcademy/readme-template/blob/master/README.md).
+Weekend project using Redux and Redux-Saga in a movies site where a user can select an individual movie by clicking on its poster. The user is re-directed to a separate page displaying the movie details, genres, and poster. 
